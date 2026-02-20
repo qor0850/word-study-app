@@ -1,0 +1,84 @@
+{
+  "nav": {
+    "addWord": "Add Word",
+    "study": "Study"
+  },
+  "common": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "back": "Back",
+    "loading": "Loading…",
+    "allWords": "All words",
+    "required": "required",
+    "optional": "optional",
+    "deleteConfirm": "Delete this word?"
+  },
+  "audio": {
+    "play": "Pronounce \"{{word}}\""
+  },
+  "list": {
+    "searchPlaceholder": "Search words or meanings…",
+    "wordCount_one": "{{count}} word",
+    "wordCount_other": "{{count}} words",
+    "emptyTitle": "No words yet",
+    "emptySubtitle": "Tap Add Word to get started."
+  },
+  "detail": {
+    "meaning": "Meaning",
+    "example": "Example",
+    "studyDay": "Study Day",
+    "addedOn": "Added {{date}}",
+    "notFound": "Word not found.",
+    "deleteConfirm": "Delete \"{{word}}\"?"
+  },
+  "form": {
+    "word": "Word",
+    "wordPlaceholder": "e.g. ephemeral",
+    "meaning": "Meaning",
+    "meaningPlaceholder": "Lasting for a very short time.",
+    "example": "Example Sentence",
+    "examplePlaceholder": "The ephemeral beauty of cherry blossoms.",
+    "studyDay": "Study Day",
+    "studyDayPlaceholder": "Select a day",
+    "addWord": "Add Word",
+    "saveChanges": "Save Changes"
+  },
+  "days": {
+    "title": "Study Schedule",
+    "day": "Day {{n}}",
+    "wordCount_one": "{{count}} word",
+    "wordCount_other": "{{count}} words",
+    "noWords": "No words added",
+    "addWord": "Add Word",
+    "prevDay": "Previous Day",
+    "nextDay": "Next Day",
+    "allDays": "All Days"
+  },
+  "study": {
+    "title": "Word Study",
+    "selectDay": "Select Day",
+    "noWords": "No words for this day.",
+    "showMeaning": "Show Meaning",
+    "hideMeaning": "Hide Meaning",
+    "prev": "Prev",
+    "next": "Next",
+    "complete": "Complete!",
+    "progress": "{{current}} / {{total}}",
+    "restart": "Restart",
+    "goAdd": "Add Words"
+  },
+  "pages": {
+    "newWord": "Add New Word",
+    "editWord": "Edit \"{{word}}\""
+  },
+  "settings": {
+    "language": "Language",
+    "ko": "한국어",
+    "en": "English"
+  },
+  "errors": {
+    "generic": "Something went wrong."
+  }
+}

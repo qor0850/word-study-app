@@ -1,0 +1,84 @@
+{
+  "nav": {
+    "addWord": "단어 추가",
+    "study": "학습"
+  },
+  "common": {
+    "edit": "수정",
+    "delete": "삭제",
+    "cancel": "취소",
+    "save": "저장",
+    "back": "뒤로",
+    "loading": "로딩 중…",
+    "allWords": "전체 단어",
+    "required": "필수",
+    "optional": "선택",
+    "deleteConfirm": "이 단어를 삭제하시겠습니까?"
+  },
+  "audio": {
+    "play": "\"{{word}}\" 발음 듣기"
+  },
+  "list": {
+    "searchPlaceholder": "단어 또는 뜻 검색…",
+    "wordCount_one": "단어 {{count}}개",
+    "wordCount_other": "단어 {{count}}개",
+    "emptyTitle": "등록된 단어가 없습니다",
+    "emptySubtitle": "단어 추가 버튼을 눌러 시작하세요."
+  },
+  "detail": {
+    "meaning": "뜻",
+    "example": "예문",
+    "studyDay": "학습일",
+    "addedOn": "{{date}} 추가됨",
+    "notFound": "단어를 찾을 수 없습니다.",
+    "deleteConfirm": "\"{{word}}\" 단어를 삭제하시겠습니까?"
+  },
+  "form": {
+    "word": "단어",
+    "wordPlaceholder": "예: ephemeral",
+    "meaning": "뜻",
+    "meaningPlaceholder": "매우 짧은 시간 동안 지속되는.",
+    "example": "예문",
+    "examplePlaceholder": "The ephemeral beauty of cherry blossoms.",
+    "studyDay": "학습일",
+    "studyDayPlaceholder": "일차를 선택하세요",
+    "addWord": "단어 추가",
+    "saveChanges": "저장"
+  },
+  "days": {
+    "title": "학습 일정",
+    "day": "{{n}}일차",
+    "wordCount_one": "단어 {{count}}개",
+    "wordCount_other": "단어 {{count}}개",
+    "noWords": "등록된 단어 없음",
+    "addWord": "단어 추가",
+    "prevDay": "이전 일차",
+    "nextDay": "다음 일차",
+    "allDays": "전체 일정"
+  },
+  "study": {
+    "title": "단어 학습",
+    "selectDay": "학습일 선택",
+    "noWords": "이 일차에 등록된 단어가 없습니다.",
+    "showMeaning": "뜻 보기",
+    "hideMeaning": "뜻 숨기기",
+    "prev": "이전",
+    "next": "다음",
+    "complete": "완료!",
+    "progress": "{{current}} / {{total}}",
+    "restart": "다시 시작",
+    "goAdd": "단어 추가하러 가기"
+  },
+  "pages": {
+    "newWord": "새 단어 추가",
+    "editWord": "\"{{word}}\" 수정"
+  },
+  "settings": {
+    "language": "언어",
+    "ko": "한국어",
+    "en": "English"
+  },
+  "errors": {
+    "generic": "오류가 발생했습니다."
+  }
+}
