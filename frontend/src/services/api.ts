@@ -63,7 +63,8 @@ export const daysApi = {
   list(): Promise<DaySummary[]> {
     return request(`${DAYS_BASE}`);
   },
-  getWords(dayNumber: number): Promise<Word[]> {
-    return request(`${DAYS_BASE}/${dayNumber}/words`);
+  getWords(dayNumber: number, cacheBuster?: string): Promise<Word[]> {
+    const qs = cacheBuster ? `?${cacheBuster}` : "";
+    return request(`${DAYS_BASE}/${dayNumber}/words${qs}`);
   },
 };

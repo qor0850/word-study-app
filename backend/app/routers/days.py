@@ -1,3 +1,4 @@
+import random
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func
@@ -27,10 +28,13 @@ async def list_days(db: AsyncSession = Depends(get_db)):
 
 @router.get("/{day_number}/words", response_model=list[WordRead])
 async def get_day_words(day_number: int, db: AsyncSession = Depends(get_db)):
-    """Return all words for a specific study day, ordered by creation time."""
+    """Return all words for a specific study day in random order."""
     result = await db.execute(
         select(Word)
         .where(Word.study_day == day_number)
         .order_by(Word.created_at.asc())
     )
-    return result.scalars().all()
+    words = result.scalars().all()
+    # Shuffle the words in random order
+    random.shuffle(words)
+    return words

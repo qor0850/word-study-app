@@ -20,7 +20,8 @@ export function DayWordsPage() {
   useEffect(() => {
     if (!dayNum) return;
     setLoading(true);
-    daysApi.getWords(dayNum).then(setWords).finally(() => setLoading(false));
+    // Cache busting with timestamp to ensure fresh random order on each visit
+    daysApi.getWords(dayNum, `_t=${Date.now()}`).then(setWords).finally(() => setLoading(false));
   }, [dayNum]);
 
   async function handleDelete(id: string, wordText: string) {

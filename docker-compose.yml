@@ -1,6 +1,9 @@
+version: "3.9"
+
 services:
   db:
     image: postgres:16-alpine
+    container_name: word_db
     restart: unless-stopped
     environment:
       POSTGRES_USER: worduser
@@ -16,6 +19,7 @@ services:
 
   backend:
     build: ./backend
+    container_name: word_backend
     restart: unless-stopped
     environment:
       DATABASE_URL: postgresql+asyncpg://worduser:wordpass@db:5432/worddb
@@ -24,15 +28,26 @@ services:
       db:
         condition: service_healthy
     ports:
-      - "8000:8000"   # Optional: exposes API directly during development
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   frontend:
     build: ./frontend
+    container_name: word_frontend
     restart: unless-stopped
     ports:
       - "80:80"
     depends_on:
       - backend
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres_data:
