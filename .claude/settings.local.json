@@ -11,7 +11,10 @@
       "Bash(/c/word-service/backend/.venv/Scripts/pip install:*)",
       "Bash(/c/word-service/backend/.venv/Scripts/python:*)",
       "Bash(docker exec:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(# Get local IP addresses ipconfig)",
+      "Bash(powershell -Command \"Get-NetIPAddress -AddressFamily IPv4 | Where-Object {$_IPAddress -notmatch ''^127\\\\.'' -and $_IPAddress -notmatch ''^169\\\\.''} | Select-Object IPAddress, InterfaceAlias | Format-Table -AutoSize\")",
+      "Bash(powershell -Command:*)"
     ]
   }
 }
