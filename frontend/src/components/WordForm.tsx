@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { api } from "../services/api";
 import type { Word, WordCreate } from "../services/api";
 import { useStudyContext } from "../contexts/StudyContext";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 interface Props {
   initial?: Word;
@@ -13,8 +14,13 @@ interface Props {
 export function WordForm({ initial }: Props) {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { userId, basePath } = useStudyContext();
+  const { userId, basePath, isPersonal } = useStudyContext();
+  const [wordbookNames] = useLocalStorage<Record<string, string>>(
+    `personal_wordbook_names_${userId}`,
+    {}
+  );
   const isEdit = Boolean(initial);
+  const totalOptions = isPersonal ? 10 : 30;
 
   const [form, setForm] = useState<WordCreate>({
     word: initial?.word ?? "",
@@ -29,7 +35,6 @@ export function WordForm({ initial }: Props) {
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
-  // If creating new word and `day` query param exists, prefill study_day
   const location = useLocation();
   useEffect(() => {
     if (!initial) {
@@ -67,6 +72,13 @@ export function WordForm({ initial }: Props) {
     }
   }
 
+  function getOptionLabel(d: number): string {
+    if (isPersonal) {
+      return wordbookNames[String(d)] || t("wordbook.name", { n: d });
+    }
+    return t("days.day", { n: d });
+  }
+
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       {error && (
@@ -90,17 +102,22 @@ export function WordForm({ initial }: Props) {
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
-          {t("form.studyDay")} <span className="text-red-500">*</span>
+          {isPersonal ? t("wordbook.label") : t("form.studyDay")}{" "}
+          <span className="text-red-500">*</span>
         </label>
         <select
           required
           value={form.study_day ?? ""}
           onChange={(e) => set("study_day", e.target.value)}
-          className="w-40 border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white"
+          className="w-48 border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white"
         >
-          <option value="" disabled>{t("form.studyDayPlaceholder")}</option>
-          {Array.from({ length: 30 }, (_, i) => i + 1).map((d) => (
-            <option key={d} value={d}>{t("days.day", { n: d })}</option>
+          <option value="" disabled>
+            {isPersonal ? t("wordbook.selectPlaceholder") : t("form.studyDayPlaceholder")}
+          </option>
+          {Array.from({ length: totalOptions }, (_, i) => i + 1).map((d) => (
+            <option key={d} value={d}>
+              {getOptionLabel(d)}
+            </option>
           ))}
         </select>
       </div>

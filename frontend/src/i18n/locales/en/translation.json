@@ -76,7 +76,19 @@
     "user": "User {{n}}",
     "selectUser": "Select a learner",
     "wordCount": "{{count}} words",
-    "noWords": "No words yet"
+    "noWords": "No words yet",
+    "editName": "Edit name"
+  },
+  "wordbook": {
+    "title": "My Wordbooks",
+    "name": "Wordbook {{n}}",
+    "all": "All Wordbooks",
+    "rename": "Rename",
+    "label": "Wordbook",
+    "selectPlaceholder": "Select a wordbook",
+    "select": "Select Wordbook",
+    "prev": "Previous Wordbook",
+    "next": "Next Wordbook"
   },
   "pages": {
     "newWord": "Add New Word",

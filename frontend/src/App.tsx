@@ -11,7 +11,7 @@ import { PersonalListPage } from "./pages/PersonalListPage";
 
 function ToeicLayout() {
   return (
-    <StudyContext.Provider value={{ userId: 0, basePath: "/toeic" }}>
+    <StudyContext.Provider value={{ userId: 0, basePath: "/toeic", isPersonal: false }}>
       <Routes>
         <Route index element={<DayListPage />} />
         <Route path="days/:day" element={<DayWordsPage />} />
@@ -28,7 +28,7 @@ function PersonalLayout() {
   const { userId: uidStr } = useParams<{ userId: string }>();
   const uid = Math.min(Math.max(parseInt(uidStr ?? "0") || 0, 1), 10);
   return (
-    <StudyContext.Provider value={{ userId: uid, basePath: `/personal/${uid}` }}>
+    <StudyContext.Provider value={{ userId: uid, basePath: `/personal/${uid}`, isPersonal: true }}>
       <Routes>
         <Route index element={<DayListPage />} />
         <Route path="days/:day" element={<DayWordsPage />} />

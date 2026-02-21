@@ -6,15 +6,26 @@ import { daysApi, api } from "../services/api";
 import type { Word } from "../services/api";
 import { AudioButton } from "../components/AudioButton";
 import { useStudyContext } from "../contexts/StudyContext";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
-const TOTAL_DAYS = 30;
+const TOTAL_TOEIC_DAYS = 30;
+const TOTAL_WORDBOOKS = 10;
 
 export function DayWordsPage() {
   const { day } = useParams<{ day: string }>();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { userId, basePath } = useStudyContext();
+  const { userId, basePath, isPersonal } = useStudyContext();
+  const [wordbookNames] = useLocalStorage<Record<string, string>>(
+    `personal_wordbook_names_${userId}`,
+    {}
+  );
   const dayNum = Number(day);
+  const totalItems = isPersonal ? TOTAL_WORDBOOKS : TOTAL_TOEIC_DAYS;
+  const pageTitle = isPersonal
+    ? (wordbookNames[String(dayNum)] || t("wordbook.name", { n: dayNum }))
+    : t("days.day", { n: dayNum });
+  const backLabel = isPersonal ? t("wordbook.all") : t("days.allDays");
 
   const [words, setWords] = useState<Word[]>([]);
   const [loading, setLoading] = useState(true);
@@ -22,7 +33,6 @@ export function DayWordsPage() {
   useEffect(() => {
     if (!dayNum) return;
     setLoading(true);
-    // Cache busting with timestamp to ensure fresh random order on each visit
     daysApi.getWords(dayNum, userId, `_t=${Date.now()}`).then(setWords).finally(() => setLoading(false));
   }, [dayNum, userId]);
 
@@ -37,23 +47,23 @@ export function DayWordsPage() {
       {/* Breadcrumb + nav */}
       <div className="flex items-center justify-between">
         <Link to={basePath} className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-800 transition-colors">
-          <ArrowLeft size={14} /> {t("days.allDays")}
+          <ArrowLeft size={14} /> {backLabel}
         </Link>
         <div className="flex items-center gap-2">
           {dayNum > 1 && (
             <button
               onClick={() => navigate(`${basePath}/days/${dayNum - 1}`)}
               className="flex items-center gap-1 px-3 py-1.5 rounded-lg border text-sm text-gray-600 hover:bg-gray-50 transition-colors"
-              title={t("days.prevDay")}
+              title={isPersonal ? t("wordbook.prev") : t("days.prevDay")}
             >
               <ArrowLeft size={13} /> {dayNum - 1}
             </button>
           )}
-          {dayNum < TOTAL_DAYS && (
+          {dayNum < totalItems && (
             <button
               onClick={() => navigate(`${basePath}/days/${dayNum + 1}`)}
               className="flex items-center gap-1 px-3 py-1.5 rounded-lg border text-sm text-gray-600 hover:bg-gray-50 transition-colors"
-              title={t("days.nextDay")}
+              title={isPersonal ? t("wordbook.next") : t("days.nextDay")}
             >
               {dayNum + 1} <ArrowRight size={13} />
             </button>
@@ -64,7 +74,7 @@ export function DayWordsPage() {
       {/* Title */}
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900">
-          {t("days.day", { n: dayNum })}
+          {pageTitle}
           <span className="ml-2 text-base font-normal text-gray-400">
             {!loading && t("days.wordCount", { count: words.length })}
           </span>

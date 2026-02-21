@@ -4,12 +4,20 @@ import { useTranslation } from "react-i18next";
 import { daysApi } from "../services/api";
 import type { Word } from "../services/api";
 import { useStudyContext } from "../contexts/StudyContext";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
-const TOTAL_DAYS = 30;
+const TOTAL_TOEIC_DAYS = 30;
+const TOTAL_WORDBOOKS = 10;
 
 export function StudyPage() {
   const { t } = useTranslation();
-  const { userId } = useStudyContext();
+  const { userId, isPersonal } = useStudyContext();
+  const totalItems = isPersonal ? TOTAL_WORDBOOKS : TOTAL_TOEIC_DAYS;
+  const [wordbookNames] = useLocalStorage<Record<string, string>>(
+    `personal_wordbook_names_${userId}`,
+    {}
+  );
+
   const [selectedDay, setSelectedDay] = useState(1);
   const [words, setWords] = useState<Word[]>([]);
   const [loading, setLoading] = useState(false);
@@ -57,28 +65,34 @@ export function StudyPage() {
   }
 
   const current = words[index];
+  const currentLabel = isPersonal
+    ? (wordbookNames[String(selectedDay)] || t("wordbook.name", { n: selectedDay }))
+    : t("days.day", { n: selectedDay });
 
   return (
     <div className="max-w-xl mx-auto space-y-6">
       <h1 className="text-2xl font-bold text-gray-900">{t("study.title")}</h1>
 
-      {/* Day selector */}
+      {/* Day / Wordbook selector */}
       <div>
         <label className="block text-sm font-medium text-gray-600 mb-2">
-          {t("study.selectDay")}
+          {isPersonal ? t("wordbook.select") : t("study.selectDay")}
         </label>
         <div className="flex flex-wrap gap-1.5">
-          {Array.from({ length: TOTAL_DAYS }, (_, i) => i + 1).map((d) => (
+          {Array.from({ length: totalItems }, (_, i) => i + 1).map((d) => (
             <button
               key={d}
               onClick={() => setSelectedDay(d)}
-              className={`w-9 h-9 rounded-xl text-sm font-medium transition-colors ${
+              className={`px-3 h-9 rounded-xl text-sm font-medium transition-colors ${
                 selectedDay === d
                   ? "bg-brand-600 text-white"
                   : "bg-white border border-gray-200 text-gray-600 hover:border-brand-300"
               }`}
+              title={isPersonal ? (wordbookNames[String(d)] || t("wordbook.name", { n: d })) : undefined}
             >
-              {d}
+              {isPersonal
+                ? (wordbookNames[String(d)] || d)
+                : d}
             </button>
           ))}
         </div>
@@ -96,7 +110,7 @@ export function StudyPage() {
           <p className="text-4xl">🎉</p>
           <p className="text-xl font-bold text-gray-900">{t("study.complete")}</p>
           <p className="text-sm text-gray-400">
-            {t("days.day", { n: selectedDay })} — {t("days.wordCount", { count: words.length })}
+            {currentLabel} — {t("days.wordCount", { count: words.length })}
           </p>
           <button
             onClick={restart}
@@ -110,7 +124,7 @@ export function StudyPage() {
         <div className="space-y-4">
           {/* Progress bar */}
           <div className="flex items-center justify-between text-sm text-gray-400">
-            <span>{t("days.day", { n: selectedDay })}</span>
+            <span>{currentLabel}</span>
             <span>{t("study.progress", { current: index + 1, total: words.length })}</span>
           </div>
           <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
