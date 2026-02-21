@@ -1,7 +1,9 @@
 {
   "nav": {
     "addWord": "단어 추가",
-    "study": "학습"
+    "study": "학습",
+    "toeic": "토익 단어",
+    "personal": "개별 학습"
   },
   "common": {
     "edit": "수정",
@@ -68,6 +70,13 @@
     "progress": "{{current}} / {{total}}",
     "restart": "다시 시작",
     "goAdd": "단어 추가하러 가기"
+  },
+  "personal": {
+    "title": "개별 학습",
+    "user": "사용자 {{n}}",
+    "selectUser": "학습자를 선택하세요",
+    "wordCount": "단어 {{count}}개",
+    "noWords": "등록된 단어 없음"
   },
   "pages": {
     "newWord": "새 단어 추가",

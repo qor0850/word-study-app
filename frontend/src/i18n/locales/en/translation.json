@@ -1,7 +1,9 @@
 {
   "nav": {
     "addWord": "Add Word",
-    "study": "Study"
+    "study": "Study",
+    "toeic": "TOEIC Words",
+    "personal": "Personal Study"
   },
   "common": {
     "edit": "Edit",
@@ -68,6 +70,13 @@
     "progress": "{{current}} / {{total}}",
     "restart": "Restart",
     "goAdd": "Add Words"
+  },
+  "personal": {
+    "title": "Personal Study",
+    "user": "User {{n}}",
+    "selectUser": "Select a learner",
+    "wordCount": "{{count}} words",
+    "noWords": "No words yet"
   },
   "pages": {
     "newWord": "Add New Word",

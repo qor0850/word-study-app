@@ -4,6 +4,7 @@ import { Loader2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { api } from "../services/api";
 import type { Word, WordCreate } from "../services/api";
+import { useStudyContext } from "../contexts/StudyContext";
 
 interface Props {
   initial?: Word;
@@ -12,6 +13,7 @@ interface Props {
 export function WordForm({ initial }: Props) {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { userId, basePath } = useStudyContext();
   const isEdit = Boolean(initial);
 
   const [form, setForm] = useState<WordCreate>({
@@ -53,10 +55,10 @@ export function WordForm({ initial }: Props) {
     try {
       if (isEdit && initial) {
         await api.update(initial.id, payload);
-        navigate(`/words/${initial.id}`, { replace: true });
+        navigate(`${basePath}/words/${initial.id}`, { replace: true });
       } else {
-        const created = await api.create(payload);
-        navigate(`/words/${created.id}`, { replace: true });
+        const created = await api.create({ ...payload, user_id: userId });
+        navigate(`${basePath}/words/${created.id}`, { replace: true });
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : t("errors.generic"));

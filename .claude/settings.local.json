@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --version)",
+      "Bash(npm:*)",
+      "Bash(pg_isready:*)",
+      "Bash(python:*)",
+      "Bash(docker compose:*)",
+      "Bash(docker ps:*)",
+      "Bash(DATABASE_URL=\"postgresql+asyncpg://worduser:wordpass@localhost:5432/worddb\" /c/word-service/backend/.venv/Scripts/python:*)",
+      "Bash(/c/word-service/backend/.venv/Scripts/pip install:*)",
+      "Bash(/c/word-service/backend/.venv/Scripts/python:*)",
+      "Bash(docker exec:*)",
+      "Bash(curl:*)"
+    ]
+  }
+}

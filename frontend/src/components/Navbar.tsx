@@ -1,10 +1,19 @@
-import { Link } from "react-router-dom";
-import { BookOpen, Plus, Play } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { BookOpen, GraduationCap, User } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
 export function Navbar() {
   const { t } = useTranslation();
+  const { pathname } = useLocation();
+
+  const isToeic = pathname.startsWith("/toeic");
+  const isPersonal = pathname.startsWith("/personal");
+
+  const activeClass =
+    "bg-white/20 text-white font-semibold px-3 py-1.5 rounded-lg text-sm flex items-center gap-1.5";
+  const inactiveClass =
+    "text-white/80 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-lg text-sm flex items-center gap-1.5 transition-colors";
 
   return (
     <nav className="bg-brand-600 text-white shadow-md sticky top-0 z-10">
@@ -14,21 +23,15 @@ export function Navbar() {
           WordApp
         </Link>
         <div className="flex items-center gap-1">
-          <Link
-            to="/study"
-            className="flex items-center gap-1.5 text-white/90 hover:opacity-90 px-3 py-1.5 rounded-lg text-sm"
-          >
-            <Play size={16} />
-            {t("nav.study")}
+          <Link to="/personal" className={isPersonal ? activeClass : inactiveClass}>
+            <User size={16} />
+            {t("nav.personal")}
+          </Link>
+          <Link to="/toeic" className={isToeic ? activeClass : inactiveClass}>
+            <GraduationCap size={16} />
+            {t("nav.toeic")}
           </Link>
           <LanguageSwitcher />
-          <Link
-            to="/words/new"
-            className="flex items-center gap-1.5 bg-white text-brand-600 font-semibold px-3 py-1.5 rounded-lg text-sm hover:bg-brand-50 transition-colors ml-1"
-          >
-            <Plus size={16} />
-            {t("nav.addWord")}
-          </Link>
         </div>
       </div>
     </nav>

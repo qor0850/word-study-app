@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { daysApi, api } from "../services/api";
 import type { Word } from "../services/api";
 import { AudioButton } from "../components/AudioButton";
+import { useStudyContext } from "../contexts/StudyContext";
 
 const TOTAL_DAYS = 30;
 
@@ -12,6 +13,7 @@ export function DayWordsPage() {
   const { day } = useParams<{ day: string }>();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { userId, basePath } = useStudyContext();
   const dayNum = Number(day);
 
   const [words, setWords] = useState<Word[]>([]);
@@ -21,8 +23,8 @@ export function DayWordsPage() {
     if (!dayNum) return;
     setLoading(true);
     // Cache busting with timestamp to ensure fresh random order on each visit
-    daysApi.getWords(dayNum, `_t=${Date.now()}`).then(setWords).finally(() => setLoading(false));
-  }, [dayNum]);
+    daysApi.getWords(dayNum, userId, `_t=${Date.now()}`).then(setWords).finally(() => setLoading(false));
+  }, [dayNum, userId]);
 
   async function handleDelete(id: string, wordText: string) {
     if (!confirm(t("detail.deleteConfirm", { word: wordText }))) return;
@@ -34,13 +36,13 @@ export function DayWordsPage() {
     <div className="space-y-5">
       {/* Breadcrumb + nav */}
       <div className="flex items-center justify-between">
-        <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-800 transition-colors">
+        <Link to={basePath} className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-800 transition-colors">
           <ArrowLeft size={14} /> {t("days.allDays")}
         </Link>
         <div className="flex items-center gap-2">
           {dayNum > 1 && (
             <button
-              onClick={() => navigate(`/days/${dayNum - 1}`)}
+              onClick={() => navigate(`${basePath}/days/${dayNum - 1}`)}
               className="flex items-center gap-1 px-3 py-1.5 rounded-lg border text-sm text-gray-600 hover:bg-gray-50 transition-colors"
               title={t("days.prevDay")}
             >
@@ -49,7 +51,7 @@ export function DayWordsPage() {
           )}
           {dayNum < TOTAL_DAYS && (
             <button
-              onClick={() => navigate(`/days/${dayNum + 1}`)}
+              onClick={() => navigate(`${basePath}/days/${dayNum + 1}`)}
               className="flex items-center gap-1 px-3 py-1.5 rounded-lg border text-sm text-gray-600 hover:bg-gray-50 transition-colors"
               title={t("days.nextDay")}
             >
@@ -68,7 +70,7 @@ export function DayWordsPage() {
           </span>
         </h1>
         <Link
-          to={`/words/new?day=${dayNum}`}
+          to={`${basePath}/words/new?day=${dayNum}`}
           className="flex items-center gap-1.5 bg-brand-600 text-white font-semibold px-3 py-2 rounded-xl text-sm hover:bg-brand-700 transition-colors"
         >
           <Plus size={15} />
@@ -84,7 +86,7 @@ export function DayWordsPage() {
           <BookOpen size={48} strokeWidth={1} />
           <p className="text-base font-medium">{t("days.noWords")}</p>
           <Link
-            to={`/words/new?day=${dayNum}`}
+            to={`${basePath}/words/new?day=${dayNum}`}
             className="text-brand-600 text-sm hover:underline"
           >
             {t("days.addWord")}
@@ -97,6 +99,7 @@ export function DayWordsPage() {
               key={word.id}
               word={word}
               index={i + 1}
+              basePath={basePath}
               onDelete={handleDelete}
             />
           ))}
@@ -109,10 +112,11 @@ export function DayWordsPage() {
 interface RowProps {
   word: Word;
   index: number;
+  basePath: string;
   onDelete: (id: string, word: string) => void;
 }
 
-function WordRow({ word, index, onDelete }: RowProps) {
+function WordRow({ word, index, basePath, onDelete }: RowProps) {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
 
@@ -124,7 +128,7 @@ function WordRow({ word, index, onDelete }: RowProps) {
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <Link
-                to={`/words/${word.id}`}
+                to={`${basePath}/words/${word.id}`}
                 className="text-base font-bold text-gray-900 hover:text-brand-600 transition-colors"
               >
                 {word.word}
@@ -135,7 +139,7 @@ function WordRow({ word, index, onDelete }: RowProps) {
               onClick={() => setExpanded((e) => !e)}
               className="text-sm text-gray-500 hover:text-gray-700 mt-1 text-left leading-relaxed line-clamp-1"
             >
-              {expanded ? word.meaning : word.meaning}
+              {word.meaning}
             </button>
             {expanded && word.example && (
               <p className="text-sm text-gray-400 italic mt-1">&ldquo;{word.example}&rdquo;</p>
@@ -144,7 +148,7 @@ function WordRow({ word, index, onDelete }: RowProps) {
         </div>
         <div className="flex items-center gap-1 shrink-0">
           <Link
-            to={`/words/${word.id}/edit`}
+            to={`${basePath}/words/${word.id}/edit`}
             className="p-1.5 text-gray-400 hover:text-brand-600 rounded-lg hover:bg-brand-50 transition-colors text-xs"
           >
             {t("common.edit")}

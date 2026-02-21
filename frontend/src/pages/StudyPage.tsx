@@ -3,11 +3,13 @@ import { ChevronLeft, ChevronRight, RotateCcw, Volume2, Eye, EyeOff } from "luci
 import { useTranslation } from "react-i18next";
 import { daysApi } from "../services/api";
 import type { Word } from "../services/api";
+import { useStudyContext } from "../contexts/StudyContext";
 
 const TOTAL_DAYS = 30;
 
 export function StudyPage() {
   const { t } = useTranslation();
+  const { userId } = useStudyContext();
   const [selectedDay, setSelectedDay] = useState(1);
   const [words, setWords] = useState<Word[]>([]);
   const [loading, setLoading] = useState(false);
@@ -20,8 +22,8 @@ export function StudyPage() {
     setIndex(0);
     setRevealed(false);
     setDone(false);
-    daysApi.getWords(selectedDay).then(setWords).finally(() => setLoading(false));
-  }, [selectedDay]);
+    daysApi.getWords(selectedDay, userId).then(setWords).finally(() => setLoading(false));
+  }, [selectedDay, userId]);
 
   function next() {
     if (index + 1 >= words.length) {

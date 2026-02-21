@@ -8,6 +8,7 @@ class WordCreate(BaseModel):
     meaning: str = Field(..., min_length=1)
     example: str | None = None
     study_day: int | None = None
+    user_id: int = Field(default=0, ge=0, le=10)
 
 
 class WordUpdate(BaseModel):
@@ -23,6 +24,8 @@ class WordRead(BaseModel):
     meaning: str
     example: str | None
     study_day: int
+    # Default 0 covers ToeicWord which exposes user_id via @property
+    user_id: int = 0
     created_at: datetime
 
     model_config = {"from_attributes": True}
@@ -30,4 +33,9 @@ class WordRead(BaseModel):
 
 class DaySummary(BaseModel):
     day_number: int
+    word_count: int
+
+
+class UserSummary(BaseModel):
+    user_id: int
     word_count: int

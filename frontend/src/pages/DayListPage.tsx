@@ -4,15 +4,18 @@ import { BookOpen, Plus } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { daysApi } from "../services/api";
 import type { DaySummary } from "../services/api";
+import { useStudyContext } from "../contexts/StudyContext";
 
 export function DayListPage() {
   const { t } = useTranslation();
+  const { userId, basePath } = useStudyContext();
   const [days, setDays] = useState<DaySummary[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    daysApi.list().then(setDays).finally(() => setLoading(false));
-  }, []);
+    setLoading(true);
+    daysApi.list(userId).then(setDays).finally(() => setLoading(false));
+  }, [userId]);
 
   const totalWords = days.reduce((sum, d) => sum + d.word_count, 0);
 
@@ -29,7 +32,7 @@ export function DayListPage() {
           )}
         </div>
         <Link
-          to="/words/new"
+          to={`${basePath}/words/new`}
           className="flex items-center gap-1.5 bg-brand-600 text-white font-semibold px-3 py-2 rounded-xl text-sm hover:bg-brand-700 transition-colors"
         >
           <Plus size={15} />
@@ -43,7 +46,7 @@ export function DayListPage() {
       ) : (
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3">
           {days.map((day) => (
-            <DayCard key={day.day_number} day={day} />
+            <DayCard key={day.day_number} day={day} basePath={basePath} />
           ))}
         </div>
       )}
@@ -51,13 +54,13 @@ export function DayListPage() {
   );
 }
 
-function DayCard({ day }: { day: DaySummary }) {
+function DayCard({ day, basePath }: { day: DaySummary; basePath: string }) {
   const { t } = useTranslation();
   const hasWords = day.word_count > 0;
 
   return (
     <Link
-      to={`/days/${day.day_number}`}
+      to={`${basePath}/days/${day.day_number}`}
       className={`relative flex flex-col items-center justify-center rounded-2xl border p-4 text-center transition-all hover:shadow-md hover:-translate-y-0.5 ${
         hasWords
           ? "bg-white border-brand-200 text-gray-900"

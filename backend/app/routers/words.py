@@ -16,10 +16,11 @@ async def list_words(
     limit: int = Query(50, ge=1, le=200),
     day: int | None = Query(None, ge=1),
     per_day: int = Query(10, ge=1, le=100),
+    user_id: int = Query(0, ge=0, le=10),
     db: AsyncSession = Depends(get_db),
 ):
     words, _ = await word_service.get_words(
-        db, search=search, skip=skip, limit=limit, day=day, per_day=per_day
+        db, search=search, skip=skip, limit=limit, day=day, per_day=per_day, user_id=user_id
     )
     return words
 

@@ -5,11 +5,13 @@ import { useTranslation } from "react-i18next";
 import { api } from "../services/api";
 import type { Word } from "../services/api";
 import { AudioButton } from "../components/AudioButton";
+import { useStudyContext } from "../contexts/StudyContext";
 
 export function WordDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
+  const { basePath } = useStudyContext();
   const [word, setWord] = useState<Word | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -21,7 +23,7 @@ export function WordDetailPage() {
   async function handleDelete() {
     if (!word || !confirm(t("detail.deleteConfirm", { word: word.word }))) return;
     await api.delete(word.id);
-    navigate("/", { replace: true });
+    navigate(basePath, { replace: true });
   }
 
   if (loading) return <p className="text-center py-20 text-gray-400">{t("common.loading")}</p>;
@@ -31,7 +33,7 @@ export function WordDetailPage() {
 
   return (
     <div className="max-w-xl mx-auto space-y-6">
-      <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-800 transition-colors">
+      <Link to={basePath} className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-800 transition-colors">
         <ArrowLeft size={14} /> {t("common.allWords")}
       </Link>
 
@@ -46,7 +48,7 @@ export function WordDetailPage() {
           </div>
           <div className="flex items-center gap-2 shrink-0">
             <Link
-              to={`/words/${word.id}/edit`}
+              to={`${basePath}/words/${word.id}/edit`}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-sm text-gray-600 hover:bg-gray-50 transition-colors"
             >
               <Pencil size={14} /> {t("common.edit")}
