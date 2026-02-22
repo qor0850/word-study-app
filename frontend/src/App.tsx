@@ -7,7 +7,9 @@ import { WordDetailPage } from "./pages/WordDetailPage";
 import { WordNewPage } from "./pages/WordNewPage";
 import { WordEditPage } from "./pages/WordEditPage";
 import { StudyPage } from "./pages/StudyPage";
+import { ListenPage } from "./pages/ListenPage";
 import { PersonalListPage } from "./pages/PersonalListPage";
+import { MemoPage } from "./pages/MemoPage";
 
 function ToeicLayout() {
   return (
@@ -19,6 +21,7 @@ function ToeicLayout() {
         <Route path="words/:id" element={<WordDetailPage />} />
         <Route path="words/:id/edit" element={<WordEditPage />} />
         <Route path="study" element={<StudyPage />} />
+        <Route path="listen" element={<ListenPage />} />
       </Routes>
     </StudyContext.Provider>
   );
@@ -36,6 +39,8 @@ function PersonalLayout() {
         <Route path="words/:id" element={<WordDetailPage />} />
         <Route path="words/:id/edit" element={<WordEditPage />} />
         <Route path="study" element={<StudyPage />} />
+        <Route path="listen" element={<ListenPage />} />
+        <Route path="memo/:memoId" element={<MemoPage />} />
       </Routes>
     </StudyContext.Provider>
   );

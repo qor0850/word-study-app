@@ -3,7 +3,23 @@
     "addWord": "Add Word",
     "study": "Study",
     "toeic": "TOEIC Words",
-    "personal": "Personal Study"
+    "personal": "Personal Study",
+    "memo": "Memo"
+  },
+  "memo": {
+    "tab": "Memo",
+    "title": "Memo",
+    "add": "New Memo",
+    "saved": "Saved",
+    "editTitle": "Edit title",
+    "placeholder": "Write your study notes freely…",
+    "autoSave": "Content is saved automatically",
+    "empty": "No memos yet",
+    "noContent": "No content",
+    "deleteConfirm": "Delete this memo?",
+    "notFound": "Memo not found.",
+    "count": "{{count}} / {{max}}",
+    "defaultTitle": "Memo {{n}}"
   },
   "common": {
     "edit": "Edit",
@@ -80,6 +96,7 @@
     "editName": "Edit name"
   },
   "wordbook": {
+    "tab": "Wordbooks",
     "title": "My Wordbooks",
     "name": "Wordbook {{n}}",
     "all": "All Wordbooks",
@@ -89,6 +106,14 @@
     "select": "Select Wordbook",
     "prev": "Previous Wordbook",
     "next": "Next Wordbook"
+  },
+  "listen": {
+    "title": "Listen",
+    "selectSource": "Select Source",
+    "allWords": "All",
+    "speed": "Speed",
+    "repeat": "Repeat",
+    "noWords": "No words found."
   },
   "pages": {
     "newWord": "Add New Word",

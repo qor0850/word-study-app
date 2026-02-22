@@ -3,7 +3,23 @@
     "addWord": "단어 추가",
     "study": "학습",
     "toeic": "토익 단어",
-    "personal": "개별 학습"
+    "personal": "개별 학습",
+    "memo": "메모장"
+  },
+  "memo": {
+    "tab": "메모장",
+    "title": "메모장",
+    "add": "새 메모",
+    "saved": "저장됨",
+    "editTitle": "제목 변경",
+    "placeholder": "자유롭게 학습 내용을 정리해보세요…",
+    "autoSave": "내용을 입력하면 자동으로 저장됩니다",
+    "empty": "메모가 없습니다",
+    "noContent": "내용 없음",
+    "deleteConfirm": "이 메모를 삭제하시겠습니까?",
+    "notFound": "메모를 찾을 수 없습니다.",
+    "count": "{{count}} / {{max}}개",
+    "defaultTitle": "메모 {{n}}"
   },
   "common": {
     "edit": "수정",
@@ -80,6 +96,7 @@
     "editName": "이름 변경"
   },
   "wordbook": {
+    "tab": "단어장",
     "title": "내 단어장",
     "name": "단어장 {{n}}",
     "all": "전체 단어장",
@@ -89,6 +106,14 @@
     "select": "단어장 선택",
     "prev": "이전 단어장",
     "next": "다음 단어장"
+  },
+  "listen": {
+    "title": "연속 듣기",
+    "selectSource": "범위 선택",
+    "allWords": "전체",
+    "speed": "속도",
+    "repeat": "반복",
+    "noWords": "단어가 없습니다."
   },
   "pages": {
     "newWord": "새 단어 추가",

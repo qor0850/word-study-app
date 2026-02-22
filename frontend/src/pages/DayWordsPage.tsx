@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Plus, BookOpen } from "lucide-react";
+import { ArrowLeft, ArrowRight, Plus, BookOpen, GraduationCap, Headphones } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { daysApi, api } from "../services/api";
 import type { Word } from "../services/api";
@@ -79,13 +79,29 @@ export function DayWordsPage() {
             {!loading && t("days.wordCount", { count: words.length })}
           </span>
         </h1>
-        <Link
-          to={`${basePath}/words/new?day=${dayNum}`}
-          className="flex items-center gap-1.5 bg-brand-600 text-white font-semibold px-3 py-2 rounded-xl text-sm hover:bg-brand-700 transition-colors"
-        >
-          <Plus size={15} />
-          {t("days.addWord")}
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            to={`${basePath}/study?book=${dayNum}`}
+            className="flex items-center gap-1 border border-brand-300 text-brand-700 font-semibold px-2.5 py-2 rounded-xl text-sm hover:bg-brand-50 transition-colors"
+            title={t("study.title")}
+          >
+            <GraduationCap size={15} />
+          </Link>
+          <Link
+            to={`${basePath}/listen?book=${dayNum}`}
+            className="flex items-center gap-1 border border-brand-300 text-brand-700 font-semibold px-2.5 py-2 rounded-xl text-sm hover:bg-brand-50 transition-colors"
+            title={t("listen.title")}
+          >
+            <Headphones size={15} />
+          </Link>
+          <Link
+            to={`${basePath}/words/new?day=${dayNum}`}
+            className="flex items-center gap-1.5 bg-brand-600 text-white font-semibold px-3 py-2 rounded-xl text-sm hover:bg-brand-700 transition-colors"
+          >
+            <Plus size={15} />
+            {t("days.addWord")}
+          </Link>
+        </div>
       </div>
 
       {/* Content */}

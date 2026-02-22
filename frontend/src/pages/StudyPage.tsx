@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { ChevronLeft, ChevronRight, RotateCcw, Volume2, Eye, EyeOff } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { daysApi } from "../services/api";
@@ -12,13 +13,15 @@ const TOTAL_WORDBOOKS = 10;
 export function StudyPage() {
   const { t } = useTranslation();
   const { userId, isPersonal } = useStudyContext();
+  const [searchParams] = useSearchParams();
   const totalItems = isPersonal ? TOTAL_WORDBOOKS : TOTAL_TOEIC_DAYS;
   const [wordbookNames] = useLocalStorage<Record<string, string>>(
     `personal_wordbook_names_${userId}`,
     {}
   );
 
-  const [selectedDay, setSelectedDay] = useState(1);
+  const initBook = Number(searchParams.get("book")) || 1;
+  const [selectedDay, setSelectedDay] = useState(Math.min(Math.max(initBook, 1), totalItems));
   const [words, setWords] = useState<Word[]>([]);
   const [loading, setLoading] = useState(false);
   const [index, setIndex] = useState(0);
